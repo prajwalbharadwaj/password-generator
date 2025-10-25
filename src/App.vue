@@ -1,10 +1,11 @@
 <script setup>
 import { reactive, onMounted, watch } from "vue";
-
-import Navbar from "~/components/Navbar.vue";
-import FormData from "~/components/FormData.vue";
-import DisplayPassword from "~/components/DisplayPassword.vue";
 import { useCopy } from "~/util/util.js";
+
+import DisplayPassword from "~/components/DisplayPassword.vue";
+import Footer from "~/components/Footer.vue";
+import FormData from "~/components/FormData.vue";
+import Navbar from "~/components/Navbar.vue";
 
 const state = reactive({
   password: "",
@@ -77,10 +78,11 @@ watch(() => state.options, () => generatePassword(), { deep: true })
 <template>
   <div>
     <Navbar />
-    <section class="grid gap-5 grid-cols-12 place-content-center mt-5 mx-auto max-w-[800px]">
+    <section class="grid gap-5 grid-cols-12  mt-5 mx-auto max-w-[800px] mb-16">
       <DisplayPassword :password="state.password" :passwordHistory="state.passwordHistory" @copy="handleCopy"
         @regenerate="generatePassword" />
       <FormData v-model="state.options" />
     </section>
+    <Footer />
   </div>
 </template>
