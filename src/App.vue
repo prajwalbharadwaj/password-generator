@@ -4,9 +4,11 @@ import { reactive, onMounted, watch } from "vue";
 import Navbar from "~/components/Navbar.vue";
 import FormData from "~/components/FormData.vue";
 import DisplayPassword from "~/components/DisplayPassword.vue";
+import { useCopy } from "~/util/util.js";
 
 const state = reactive({
   password: "",
+  passwordHistory: [],
   copied: false,
   options: {
     charLength: 12,
@@ -19,13 +21,20 @@ const state = reactive({
   }
 });
 
+// const handleCopy = async () => {
+//   if (state.password) {
+//     await navigator.clipboard.writeText(state.password);
+//     state.passwordHistory = [...new Set([state.password, ...state.passwordHistory])];
+
+//     state.copied = true;
+//     setTimeout(() => (state.copied = false), 1500);
+//   }
+// };
+
 const handleCopy = async () => {
-  if (state.password) {
-    await navigator.clipboard.writeText(state.password);
-    state.copied = true;
-    setTimeout(() => (state.copied = false), 1500);
-  }
-};
+  await useCopy(state.password);
+  state.passwordHistory = [...new Set([state.password, ...state.passwordHistory])];
+}
 
 const generatePassword = () => {
   let chars = "";
@@ -69,7 +78,8 @@ watch(() => state.options, () => generatePassword(), { deep: true })
   <div>
     <Navbar />
     <section class="grid gap-5 grid-cols-12 place-content-center mt-5 mx-auto max-w-[800px]">
-      <DisplayPassword :password="state.password" @copy="handleCopy" @regenerate="generatePassword" />
+      <DisplayPassword :password="state.password" :passwordHistory="state.passwordHistory" @copy="handleCopy"
+        @regenerate="generatePassword" />
       <FormData v-model="state.options" />
     </section>
   </div>
