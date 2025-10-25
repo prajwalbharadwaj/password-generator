@@ -47,7 +47,7 @@ const generatePassword = () => {
   } else if (state.options.mode === "read") {
     if (state.options.useUppercase) chars += "ABCDEFGHJKMNPQRSTUVWXYZ";
     if (state.options.useLowercase) chars += "abcdefghjkmnpqrstuvwxyz";
-    if (state.options.useNumbers) chars += "0123456789";
+    if (state.options.useNumbers) chars += "23456789";
     if (state.options.customSymbols?.length) chars += state.options.customSymbols;
   } else {
     if (state.options.useUppercase) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

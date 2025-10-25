@@ -1,38 +1,87 @@
-# password-generator
+# Password Generator
 
-This template should help get you started developing with Vue 3 in Vite.
+A modern, secure password generator built with Vue 3 and Tailwind CSS. Generate strong, customizable passwords with various character sets and modes to suit your security needs.
 
-## Recommended IDE Setup
+## Features
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Multiple Generation Modes**:
 
-## Recommended Browser Setup
+  - **Easy to Say**: Uses only letters (uppercase/lowercase) for passwords that are easy to pronounce
+  - **Easy to Read**: Excludes confusing characters (0, O, I, l) for better readability
+  - **All Characters**: Full character set including numbers and symbols for maximum security
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- **Customizable Options**:
 
-## Customize configuration
+  - Adjustable password length (4-50 characters)
+  - Toggle uppercase, lowercase, numbers, and symbols
+  - Custom symbol input for specific requirements - user it as a string
+  - Real-time password generation
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- **User-Friendly Interface**:
 
-## Project Setup
+  - Clean, modern design with Tailwind CSS
+  - One-click copy to clipboard
+  - Password history tracking
+  - Responsive design for all devices
 
-```sh
-pnpm install
+- **Security Features**:
+  - Client-side generation (no data sent to servers)
+  - Password history stored locally
+
+## Tech Stack
+
+- **Frontend**: Vue 3 with Composition API
+- **Styling**: Tailwind CSS
+- **Build Tool**: Vite
+- **Package Manager**: pnpm
+
+## Prerequisites
+
+- Node.js (^20.19.0 || >=22.12.0)
+- pnpm (recommended) or npm
+
+## Usage
+
+1. **Select Password Length**: Use the slider or input field to set your desired password length (4-50 characters)
+
+2. **Choose Generation Mode**:
+
+   - **Easy to Say**: Best for passwords you need to speak aloud
+   - **Easy to Read**: Avoids confusing characters like 0, O, I, l
+   - **All Characters**: Maximum security with all character types
+
+3. **Customize Character Sets**: Toggle uppercase, lowercase, numbers, and symbols as needed
+
+4. **Add Custom Symbols**: Enter specific symbols you want to include in your passwords
+
+5. **Generate & Copy**: Click the regenerate button to create a new password, then copy it to your clipboard
+
+6. **View History**: Access previously generated passwords from the history section
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── DisplayPassword.vue    # Password display and controls
+│   ├── FormData.vue          # Configuration form
+│   ├── Footer.vue            # Footer component
+│   └── Navbar.vue            # Navigation component
+├── util/
+│   └── util.js               # Utility functions (copy to clipboard)
+├── App.vue                   # Main application component
+├── main.js                   # Application entry point
+└── assets/
+    └── main.css              # Global styles
 ```
 
-### Compile and Hot-Reload for Development
+## License
 
-```sh
-pnpm dev
-```
+This project is open source and available under the [MIT License](LICENSE).
 
-### Compile and Minify for Production
+## Browser Support
 
-```sh
-pnpm build
-```
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
