@@ -1,11 +1,76 @@
-<script setup></script>
+<script setup>
+import { reactive, onMounted, watch } from "vue";
+
+import Navbar from "~/components/Navbar.vue";
+import FormData from "~/components/FormData.vue";
+import DisplayPassword from "~/components/DisplayPassword.vue";
+
+const state = reactive({
+  password: "",
+  copied: false,
+  options: {
+    charLength: 12,
+    mode: "all",
+    useUppercase: true,
+    useLowercase: true,
+    useNumbers: true,
+    useSymbols: true,
+    customSymbols: '',
+  }
+});
+
+const handleCopy = async () => {
+  if (state.password) {
+    await navigator.clipboard.writeText(state.password);
+    state.copied = true;
+    setTimeout(() => (state.copied = false), 1500);
+  }
+};
+
+const generatePassword = () => {
+  let chars = "";
+
+  if (state.options.mode === "say") {
+    if (state.options.useUppercase) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    if (state.options.useLowercase) chars += "abcdefghijklmnopqrstuvwxyz";
+    if (state.options.customSymbols?.length) chars += state.options.customSymbols;
+  } else if (state.options.mode === "read") {
+    if (state.options.useUppercase) chars += "ABCDEFGHJKMNPQRSTUVWXYZ";
+    if (state.options.useLowercase) chars += "abcdefghjkmnpqrstuvwxyz";
+    if (state.options.useNumbers) chars += "0123456789";
+    if (state.options.customSymbols?.length) chars += state.options.customSymbols;
+  } else {
+    if (state.options.useUppercase) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    if (state.options.useLowercase) chars += "abcdefghijklmnopqrstuvwxyz";
+    if (state.options.useNumbers) chars += "0123456789";
+    if (state.options.customSymbols?.length) chars += state.options.customSymbols;
+    else if (state.options.useSymbols) chars += "!@#$%^&*()-_=+[]{}|;:,.<>?";
+  }
+
+  if (!chars) {
+    state.password = "Select options!";
+    return;
+  }
+
+  let result = "";
+  for (let i = 0; i < +state.options.charLength; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  state.password = result;
+  state.copied = false;
+};
+
+onMounted(() => generatePassword())
+
+watch(() => state.options, () => generatePassword(), { deep: true })
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div>
+    <Navbar />
+    <section class="grid gap-5 grid-cols-12 place-content-center mt-5 mx-auto max-w-[800px]">
+      <DisplayPassword :password="state.password" @copy="handleCopy" @regenerate="generatePassword" />
+      <FormData v-model="state.options" />
+    </section>
+  </div>
 </template>
-
-<style scoped></style>
