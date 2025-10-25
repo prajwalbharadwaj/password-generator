@@ -39,9 +39,9 @@ const strengthPercentage = computed(() => {
 
 const strengthColor = computed(() => {
   const percentage = strengthPercentage.value;
-  if (percentage < 40) return 'var(--color-weak)';
-  if (percentage < 80) return 'var(--color-medium)';
-  return 'var(--color-strong)';
+  if (percentage < 40) return 'rgba(192, 21, 47, 1)';
+  if (percentage < 80) return 'rgba(245, 158, 11, 1)';
+  return 'rgba(34, 197, 94, 1)';
 });
 
 const strengthText = computed(() => {
