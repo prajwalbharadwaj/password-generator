@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+
 const props = defineProps({
   password: {
     type: String,
@@ -9,6 +10,7 @@ const props = defineProps({
   },
 });
 const emit = defineEmits(['copy', 'regenerate']);
+
 const showCopiedPassword = ref(false)
 const buttonClasses = 'size-10 cursor-pointer inline-flex items-center justify-center hover:text-blue-500 rounded border-none outline-none hover:shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] bg-white'
 </script>
