@@ -20,13 +20,23 @@ A modern, secure password generator built with Vue 3 and Tailwind CSS. Generate 
 - **User-Friendly Interface**:
 
   - Clean, modern design with Tailwind CSS
-  - One-click copy to clipboard
-  - Password history tracking
+  - One-click copy to clipboard with toast notifications
+  - Password strength meter with visual indicators
+  - Password history tracking with click-to-copy functionality
+  - Real-time password requirements validation
   - Responsive design for all devices
+
+- **Password Strength Analysis**:
+
+  - Real-time strength assessment (Weak/Medium/Strong)
+  - Visual strength meter with color-coded indicators
+  - Password requirements checklist
+  - Strength percentage calculation
 
 - **Security Features**:
   - Client-side generation (no data sent to servers)
   - Password history stored locally
+  - Enhanced "Easy to Read" mode excludes confusing characters (0, O, I, l, 1)
 
 ## Tech Stack
 
@@ -34,6 +44,7 @@ A modern, secure password generator built with Vue 3 and Tailwind CSS. Generate 
 - **Styling**: Tailwind CSS
 - **Build Tool**: Vite
 - **Package Manager**: pnpm
+- **Notifications**: vue3-toastify
 
 ## Prerequisites
 
@@ -54,25 +65,28 @@ A modern, secure password generator built with Vue 3 and Tailwind CSS. Generate 
 
 4. **Add Custom Symbols**: Enter specific symbols you want to include in your passwords
 
-5. **Generate & Copy**: Click the regenerate button to create a new password, then copy it to your clipboard
+5. **Generate & Copy**: Click the regenerate button to create a new password, then copy it to your clipboard with toast notification
 
-6. **View History**: Access previously generated passwords from the history section
+6. **Monitor Strength**: View real-time password strength analysis with visual meter and requirements checklist
+
+7. **View History**: Access previously generated passwords from the history section - click any password to copy it again
 
 ## Project Structure
 
 ```
 src/
 ├── components/
-│   ├── DisplayPassword.vue    # Password display and controls
-│   ├── FormData.vue          # Configuration form
-│   ├── Footer.vue            # Footer component
-│   └── Navbar.vue            # Navigation component
+│   ├── DisplayPassword.vue              # Password display with strength meter
+│   ├── DisplayPasswordHistoryList.vue   # Password history with click-to-copy
+│   ├── FormData.vue                    # Configuration form
+│   ├── Footer.vue                      # Footer component
+│   └── Navbar.vue                      # Navigation component
 ├── util/
-│   └── util.js               # Utility functions (copy to clipboard)
-├── App.vue                   # Main application component
-├── main.js                   # Application entry point
+│   └── util.js                         # Utility functions (copy with toast)
+├── App.vue                             # Main application component
+├── main.js                             # Application entry point
 └── assets/
-    └── main.css              # Global styles
+    └── main.css                        # Global styles with strength meter CSS
 ```
 
 ## License
