@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import DisplayPasswordHistoryList from '~/components/DisplayPasswordHistoryList.vue'
 
 const props = defineProps({
   password: {
@@ -13,6 +14,43 @@ const emit = defineEmits(['copy', 'regenerate']);
 
 const showCopiedPassword = ref(false)
 const buttonClasses = 'size-10 cursor-pointer inline-flex items-center justify-center hover:text-blue-500 rounded border-none outline-none hover:shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] bg-white'
+
+const hasMinLength = computed(() => props.password.length >= 8);
+const hasUpperCase = computed(() => /[A-Z]/.test(props.password));
+const hasLowerCase = computed(() => /[a-z]/.test(props.password));
+const hasNumber = computed(() => /[0-9]/.test(props.password));
+const hasSpecialChar = computed(() => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(props.password));
+
+const strengthPercentage = computed(() => {
+  if (!props.password) return 0;
+
+  let strength = 0;
+  const criteria = [
+    hasMinLength.value,
+    hasUpperCase.value,
+    hasLowerCase.value,
+    hasNumber.value,
+    hasSpecialChar.value
+  ];
+
+  strength = criteria.filter(Boolean).length;
+  return Math.round((strength / 5) * 100);
+});
+
+const strengthColor = computed(() => {
+  const percentage = strengthPercentage.value;
+  if (percentage < 40) return 'var(--color-weak)';
+  if (percentage < 80) return 'var(--color-medium)';
+  return 'var(--color-strong)';
+});
+
+const strengthText = computed(() => {
+  if (!props.password) return 'No Password';
+  const percentage = strengthPercentage.value;
+  if (percentage < 40) return 'Weak';
+  if (percentage < 80) return 'Medium';
+  return 'Strong';
+});
 </script>
 
 <template>
@@ -36,14 +74,35 @@ const buttonClasses = 'size-10 cursor-pointer inline-flex items-center justify-c
         </button>
       </div>
     </div>
-    <div v-if="passwordHistory?.length">
-      <div class="flex justify-end cursor-pointer" @click="showCopiedPassword = !showCopiedPassword"> {{
-        showCopiedPassword ? 'Hide ' : 'Show ' }}Copied Passwords</div>
-      <template v-if="showCopiedPassword">
-        <div v-for="item in passwordHistory" :key="item">
-          {{ item }}
-        </div>
-      </template>
+    <div class="strength-meter">
+      <div class="strength-bar">
+        <div class="strength-fill" :style="{
+          width: strengthPercentage + '%',
+          backgroundColor: strengthColor
+        }"></div>
+      </div>
+      <div class="strength-info">
+        <span class="strength-label" :style="{ color: strengthColor }">
+          {{ strengthText }}
+        </span>
+        <span class="strength-percentage">
+          {{ strengthPercentage }}%
+        </span>
+      </div>
+    </div>
+    <div class="flex justify-between">
+      <div class="requirements">
+        <strong>Requirements:</strong>
+        <ul>
+          <li :class="{ met: hasMinLength }">At least 8 characters</li>
+          <li :class="{ met: hasUpperCase }">Contains uppercase letter</li>
+          <li :class="{ met: hasLowerCase }">Contains lowercase letter</li>
+          <li :class="{ met: hasNumber }">Contains number</li>
+          <li :class="{ met: hasSpecialChar }">Contains special character</li>
+        </ul>
+      </div>
+      <!-- List of all the password copied -->
+      <DisplayPasswordHistoryList :passwordHistory="passwordHistory" />
     </div>
   </div>
 </template>
