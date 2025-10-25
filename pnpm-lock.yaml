@@ -17,6 +17,9 @@ importers:
       vue:
         specifier: ^3.5.22
         version: 3.5.22
+      vue3-toastify:
+        specifier: ^0.2.8
+        version: 0.2.8(vue@3.5.22)
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^6.0.1
@@ -1011,6 +1014,15 @@ packages:
       yaml:
         optional: true
 
+  vue3-toastify@0.2.8:
+    resolution: {integrity: sha512-8jDOqsJaBZEbGpCbhWDETJc11D1lZefvgFPq/IPdM+U7+qyXoVPDvK6uq/FIgyV7qV0NcNzvGBMEzjsLQqGROw==}
+    engines: {node: '>=20', npm: '>=9.0.0'}
+    peerDependencies:
+      vue: '>=3.2.0'
+    peerDependenciesMeta:
+      vue:
+        optional: true
+
   vue@3.5.22:
     resolution: {integrity: sha512-toaZjQ3a/G/mYaLSbV+QsQhIdMo9x5rrqIpYRObsJ6T/J+RyCSFwN2LHNVH9v8uIcljDNa3QzPVdv3Y6b9hAJQ==}
     peerDependencies:
@@ -1921,6 +1933,10 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.6.1
       lightningcss: 1.30.2
+
+  vue3-toastify@0.2.8(vue@3.5.22):
+    optionalDependencies:
+      vue: 3.5.22
 
   vue@3.5.22:
     dependencies:
